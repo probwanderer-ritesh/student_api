@@ -18,7 +18,17 @@ func GetAllUsers(student *[]Student) (err error) {
 
 // CreateStudent ... Insert New Data
 func CreateStudent(student *Student) (err error) {
-	if err = Config.DB.Create(student).Error; err != nil {
+	newStudent := &Student{
+		FirstName: student.FirstName,
+		LastName:  student.LastName,
+		DOB:       student.DOB,
+		Address:   student.Address,
+		Marks: Marks{
+			Maths:   student.Marks.Maths,
+			English: student.Marks.English,
+		},
+	}
+	if err = Config.DB.Create(newStudent).Error; err != nil {
 		return err
 	}
 	return nil
